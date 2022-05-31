@@ -1,0 +1,15 @@
+=> Loading train corpus...
+Traceback (most recent call last):
+  File "classifier_trf_hf.py", line 456, in <module>
+    main()
+  File "classifier_trf_hf.py", line 392, in main
+    train_data, _ = load_corpus(args, 'train')
+  File "classifier_trf_hf.py", line 203, in load_corpus
+    tokenizer = AutoTokenizer.from_pretrained(args.arch, model_max_length=args.max_length)
+  File "/data/s4314719/.envs/py3.8.6_env/lib/python3.8/site-packages/transformers/models/auto/tokenization_auto.py", line 469, in from_pretrained
+    return tokenizer_class_fast.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+  File "/data/s4314719/.envs/py3.8.6_env/lib/python3.8/site-packages/transformers/tokenization_utils_base.py", line 1741, in from_pretrained
+    return cls._from_pretrained(
+  File "/data/s4314719/.envs/py3.8.6_env/lib/python3.8/site-packages/transformers/tokenization_utils_base.py", line 1843, in _from_pretrained
+    init_kwargs["model_max_length"] = min(init_kwargs.get("model_max_length", int(1e30)), model_max_length)
+TypeError: '<' not supported between instances of 'int' and 'NoneType'

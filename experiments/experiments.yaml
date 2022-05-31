@@ -1,0 +1,132 @@
+short_description: 'These are all the experiments for the task of classifying HT vs. MT
+on DE->EN translations.'
+
+long_description: '
+All the experiments are listed below. Every experiment has a corresponding folder based
+on its experiment id, containing the data used for the experiment and the models and
+Slurm output. DeepL is used as the default MT system for all experiments. All data used
+is derived from the annual WMT test datasets.
+
+For each experiment, there is a boolean `include_additional_data`. If it is set to
+False, we use only translations from original text. We then have the following sources
+of data (note: `X -> Y (A)` indicates a translation from language X to language Y by
+translator A):
+
+HT: DE -> EN (human)
+MT: DE -> EN (DeepL)
+
+If `include_additional_data` is instead set to True, we additionally include two more
+sources of data: (1) original English text, and (2) text that has been translated first
+by a human translator and then back to the original language by a MT. We thus have:
+
+HT: DE -> EN (human)
+    EN       (human)
+MT: DE -> EN (DeepL)
+    EN -> DE (human) -> EN (DeepL)
+
+The main advantage of including this additional data is that it doubles the dataset
+size, at the cost of having data that is not quite as clean.
+
+Note that most experiments use the same dev/test set(s), listed directly below under
+`shared_data`. When using the WMT translations, we use the data that has been
+preprocessed for DeepL (removing leading/trailing whitespaces).
+
+Note that for all normalized files, the normalization is done *after* applying MT
+systems to the data to be translated.  For these files, the data is normalized using a
+Moses Perl script.'
+
+shared_data:
+    dev: WMT18 (w/o additional data)
+    test: WMT19 (w/o additional data)
+
+---
+# No additional data
+exp_id: 1
+include_additional_data: False
+data:
+	train:
+        - WMT{14..17}
+---
+# Newer DeepL (November 2021)
+exp_id: 2
+include_additional_data: True
+data:
+	train:
+        - WMT{14..17}
+        - part of WMT18 (org. English + EN->DE->EN translations)
+---
+# Train on all (i.e. initialize with trained model from exp 2), finetune on original
+exp_id: 3
+include_additional_data: False
+data:
+	train:
+        - WMT{14..17}
+---
+# More data
+exp_id: 4
+include_additional_data: True
+data:
+	train:
+        - WMT{08..17}
+        - part of WMT18 (org. English + EN->DE->EN translations)
+---
+# Less data
+exp_id: 5
+include_additional_data: True
+data:
+	train:
+        - WMT{16..17}
+        - part of WMT18 (org. English + EN->DE->EN translations)
+---
+# Fine-tune only on translationese. Motivation: same amount of data as experiment 3;
+# difference is original vs translationese.
+exp_id: 6
+include_additional_data: True
+data:
+	train:
+        - WMT{14..17} (only additional)
+---
+# Bilingual setting. Use a bilingual model that has access to the source sentence.
+exp_id: 7
+include_additional_data: False
+data:
+	train:
+        - WMT{08..17}
+---
+# All data without additional (pairs with exp. 4)
+exp_id: 8
+include_additional_data: False
+data:
+	train:
+        - WMT{08..17}
+---
+# Train on all WMT data (initialize with best model from exp 4), finetune on original
+exp_id: 9
+include_additional_data: False
+data:
+	train:
+        - WMT{08..17}
+---
+# Document-level classification
+exp_id: 10
+include_additional_data: True
+data:
+	train:
+		- WMT{08..17}
+		- part of WMT18 (org. English + EN->DE->EN translations)
+---
+# Document-level classification, normalized
+exp_id: 11
+include_additional_data: True
+data:
+	train:
+		- WMT{08..17}
+		- part of WMT18 (org. English + EN->DE->EN translations)
+---
+# Additional only (translationese + original English)
+exp_id: 12
+include_additional_data: True
+data:
+	train:
+		- WMT{08..17}
+		- part of WMT18 (org. English + EN->DE->EN translations)
