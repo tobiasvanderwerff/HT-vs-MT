@@ -1,11 +1,30 @@
 # MT vs. HT
 All code, data, experiment scripts and results for the EAMT 2022 paper "Automatic
 Discrimination of Human and Neural Machine Translation: A Study with Multiple
-Pre-Trained Models and Longer Context".
+Pre-Trained Models and Longer Context" ([link to pdf](https://aclanthology.org/2022.eamt-1.19/)).
+This work was done at the University of Groningen as part of the 
+[MaCoCu project](https://macocu.eu/).
 
 Most scripts for running experiments are written for the SLURM workload manager, which
-is used on our local High Performance Cluster. For the most part, these are simply bash
+is used on the local High Performance Cluster. For the most part, these are simply bash
 scripts with some additional SLURM-specific parameters defined at the top of the script.
+
+## Citation
+If you want to cite the paper, you can use the following Bibtex entry: 
+
+```
+@inproceedings{van-der-werff-etal-2022-automatic,
+    title = "Automatic Discrimination of Human and Neural Machine Translation: A Study with Multiple Pre-Trained Models and Longer Context",
+    author = "van der Werff, Tobias  and van Noord, Rik and Toral, Antonio",
+    booktitle = "Proceedings of the 23rd Annual Conference of the European Association for Machine Translation",
+    month = jun,
+    year = "2022",
+    address = "Ghent, Belgium",
+    publisher = "European Association for Machine Translation",
+    url = "https://aclanthology.org/2022.eamt-1.19",
+    pages = "161--170",
+}
+```
 
 ## How to run
 The `classifier_trf_hf.py` script is the main entry point for training a classifier
